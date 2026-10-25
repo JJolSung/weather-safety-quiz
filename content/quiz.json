@@ -3,6 +3,8 @@
   "appIntro": "Learn how to stay safe during extreme weather in Switzerland. Pick a scenario, answer three questions and get instant feedback with links to official guidance.",
   "demoNotice": "Sample content for demo purposes — will be replaced with client-supplied content.",
   "learnMoreLabel": "Learn more",
+  "heroVideo": "",
+  "heroPoster": "",
   "scenarios": [
     {
       "id": "flooding",

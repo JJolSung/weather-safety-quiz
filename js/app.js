@@ -21,6 +21,7 @@ let content = null;
 let quiz = null;
 
 const LETTERS = 'ABCDEFGHIJ';
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 // --- helpers ----------------------------------------------------------------
 
@@ -132,6 +133,8 @@ function renderHome() {
     <section class="home">
       <div class="hero">
         <div class="scene-slot" data-theme="sky"></div>
+        ${heroVideoMarkup()}
+        <div class="hero-overlay"></div>
         <div class="hero-inner">
           <h1>${esc(content.appTitle)}</h1>
           <p class="lead">${esc(content.appIntro ?? '')}</p>
@@ -141,6 +144,25 @@ function renderHome() {
       <ul class="scenario-grid">${cards}</ul>
     </section>
   `);
+
+  // If the optional video cannot be loaded, drop it and keep the CSS scene.
+  const video = main.querySelector('.hero-video');
+  video?.querySelector('source')?.addEventListener('error', () => video.remove());
+}
+
+// Optional background video (content.heroVideo). Skipped on small screens
+// to save data, and when the user prefers reduced motion; the animated CSS
+// scene underneath is the fallback in every case.
+function heroVideoMarkup() {
+  const src = content.heroVideo;
+  if (!src) return '';
+  if (reducedMotion.matches) return '';
+  if (window.matchMedia('(max-width: 640px)').matches) return '';
+  const poster = content.heroPoster ? ` poster="${esc(content.heroPoster)}"` : '';
+  return `
+    <video class="hero-video" autoplay muted loop playsinline preload="metadata"${poster} aria-hidden="true" tabindex="-1">
+      <source src="${esc(src)}" type="video/mp4">
+    </video>`;
 }
 
 // --- Question / Feedback ----------------------------------------------------
@@ -262,8 +284,6 @@ function renderQuizCard() {
 }
 
 // --- Result -----------------------------------------------------------------
-
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 // Count the score up from 0 over ~700 ms; shows the final value at once
 // when the user prefers reduced motion.
