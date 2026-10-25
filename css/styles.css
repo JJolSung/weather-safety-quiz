@@ -156,11 +156,100 @@ main {
 
 .icon { width: 1.25em; height: 1.25em; flex: none; }
 
+/* --- Scenes (inline SVG from js/scenes.js) -------------------------------
+   All movement uses transform / opacity only. Elements marked .anim-only
+   are hidden entirely when the user prefers reduced motion. */
+
 .scene-slot { position: relative; overflow: hidden; }
 .scene { position: absolute; inset: 0; }
-.scene-flood { background: linear-gradient(180deg, #8fb3d9 0%, #4f7fb5 100%); }
-.scene-heat  { background: linear-gradient(180deg, #fbd38d 0%, #e07a2c 100%); }
-.scene-storm { background: linear-gradient(180deg, #5a6484 0%, #2f3650 100%); }
+.scene svg { display: block; width: 100%; height: 100%; }
+.scene-flood { background: #6d8db1; }
+.scene-heat  { background: #f4a261; }
+.scene-storm { background: #1f2538; }
+.scene-sky   { background: #2f5d8a; }
+
+/* clouds drift from --from to --to, spread out by a negative delay */
+.cloud { animation: cloud-drift var(--speed, 80s) linear var(--delay, 0s) infinite; }
+.cloud-slow  { fill: #ffffff; opacity: 0.55; }
+.cloud-dark  { fill: #596481; opacity: 0.9; }
+.cloud-light { fill: #ffffff; opacity: 0.12; }
+
+@keyframes cloud-drift {
+  from { transform: translateX(var(--from, -150px)); }
+  to   { transform: translateX(var(--to, 450px)); }
+}
+
+/* rain */
+.rain line { animation: rain-fall var(--dur, 1.2s) linear var(--delay, 0s) infinite; }
+.rain-slanted { transform: skewX(-14deg); transform-origin: 50% 0; }
+
+@keyframes rain-fall {
+  from { transform: translateY(-24px); }
+  to   { transform: translateY(240px); }
+}
+
+/* flood water: two waves slide sideways while the whole body slowly rises */
+.water { animation: water-rise 9s ease-in-out infinite alternate; }
+.wave-back  { animation: wave-slide 7s linear infinite; }
+.wave-front { animation: wave-slide 5s linear infinite reverse; }
+
+@keyframes wave-slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-200px); }
+}
+@keyframes water-rise {
+  from { transform: translateY(14px); }
+  to   { transform: translateY(-10px); }
+}
+
+/* heat: pulsing sun and shimmer lines rising off the ground */
+.sun-core, .sun-glow { transform-box: fill-box; transform-origin: center; }
+.sun-core { animation: sun-pulse 5s ease-in-out infinite; }
+.sun-glow { animation: sun-glow 5s ease-in-out infinite; }
+.shimmer path {
+  opacity: 0;
+  animation: shimmer-rise 4s ease-out var(--delay, 0s) infinite;
+}
+
+@keyframes sun-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+@keyframes sun-glow {
+  0%, 100% { transform: scale(1); opacity: 0.45; }
+  50%      { transform: scale(1.12); opacity: 0.65; }
+}
+@keyframes shimmer-rise {
+  0%   { transform: translateY(0); opacity: 0; }
+  30%  { opacity: 0.22; }
+  100% { transform: translateY(-48px); opacity: 0; }
+}
+
+/* storm: two soft flashes per 11 s cycle (well under 3 per second),
+   kept low in opacity so there is no large high-contrast flicker */
+.flash { opacity: 0; animation: storm-flash 11s linear infinite; }
+.bolt  { opacity: 0; animation: storm-bolt 11s linear infinite; }
+
+@keyframes storm-flash {
+  0%, 26%, 29%, 63%, 65%, 100% { opacity: 0; }
+  27%   { opacity: 0.22; }
+  27.6% { opacity: 0.08; }
+  28.2% { opacity: 0.18; }
+  64%   { opacity: 0.14; }
+}
+@keyframes storm-bolt {
+  0%, 26.5%, 29%, 100% { opacity: 0; }
+  27%   { opacity: 1; }
+  27.6% { opacity: 0.4; }
+  28.2% { opacity: 0.9; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-only { display: none; }
+  .cloud, .rain line, .water, .wave-back, .wave-front, .sun-core, .sun-glow {
+    animation: none;
+  }
+}
 
 /* --- view transition ----------------------------------------------------- */
 
@@ -180,6 +269,13 @@ main {
   background: linear-gradient(135deg, #1f3a5f 0%, #2f5d8a 60%, #4a8ab8 100%);
   color: #fff;
   box-shadow: var(--shadow);
+}
+.hero .scene-slot { position: absolute; inset: 0; }
+.hero .scene-slot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(20, 38, 62, 0.55) 0%, rgba(20, 38, 62, 0.15) 70%, rgba(20, 38, 62, 0) 100%);
 }
 .hero-inner {
   position: relative;
@@ -373,6 +469,26 @@ main {
 
 .option:disabled:not(.is-correct):not(.is-wrong) { opacity: 0.6; }
 
+/* answer feedback motion: the tick draws itself, a wrong pick shakes once */
+.icon-check path { stroke-dasharray: 22; }
+.option.is-correct .icon-check path,
+.feedback.is-correct .icon-check path {
+  stroke-dashoffset: 22;
+  animation: draw-check 380ms ease-out 80ms forwards;
+}
+.option.is-wrong { animation: shake 420ms ease; }
+
+@keyframes draw-check {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%      { transform: translateX(-6px); }
+  40%      { transform: translateX(5px); }
+  60%      { transform: translateX(-3px); }
+  80%      { transform: translateX(2px); }
+}
+
 /* --- Feedback ------------------------------------------------------------ */
 
 .feedback {
@@ -420,7 +536,13 @@ main {
   margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
 }
+.score-value { display: inline-block; animation: score-pop 500ms cubic-bezier(0.2, 0.8, 0.3, 1.2) both; }
 .score-total { font-size: 0.45em; color: var(--text-muted); font-weight: 600; }
+
+@keyframes score-pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
 .result-message { margin-bottom: 1.5rem; }
 .result-card h3 { margin-top: 1.25rem; color: var(--text-muted); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.05em; }
 .summary { font-size: 1.05rem; }

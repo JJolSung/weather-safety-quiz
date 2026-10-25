@@ -131,6 +131,7 @@ function renderHome() {
   showView(`
     <section class="home">
       <div class="hero">
+        <div class="scene-slot" data-theme="sky"></div>
         <div class="hero-inner">
           <h1>${esc(content.appTitle)}</h1>
           <p class="lead">${esc(content.appIntro ?? '')}</p>
@@ -262,6 +263,24 @@ function renderQuizCard() {
 
 // --- Result -----------------------------------------------------------------
 
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+// Count the score up from 0 over ~700 ms; shows the final value at once
+// when the user prefers reduced motion.
+function countUp(el, target) {
+  if (!el || reducedMotion.matches || target === 0) return;
+  const duration = 700;
+  const start = performance.now();
+  el.textContent = '0';
+  function tick(now) {
+    const t = Math.min(1, (now - start) / duration);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = String(Math.round(eased * target));
+    if (t < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
 function renderResult() {
   const card = document.getElementById('quiz-card');
   const s = quiz.scenario;
@@ -299,6 +318,8 @@ function renderResult() {
       <a class="btn btn-secondary" href="#/">Choose another scenario</a>
     </div>
   `;
+
+  countUp(document.getElementById('score-value'), quiz.score);
 
   document.getElementById('retry-btn').addEventListener('click', () => {
     quiz = restartQuiz(quiz);
