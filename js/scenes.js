@@ -50,6 +50,20 @@ function cloud(cx, cy, scale, className, extraStyle = '') {
     </g>`;
 }
 
+// A tree silhouette with its base at (x, y). The inner group sways from its
+// base via CSS (.tree), the outer group only positions it.
+function tree(x, y, scale, extraStyle = '') {
+  return `
+    <g transform="translate(${x} ${y}) scale(${scale})">
+      <g class="tree" style="${extraStyle}" fill="#0c140f">
+        <rect x="-2.5" y="-30" width="5" height="30" rx="1"/>
+        <ellipse cx="0" cy="-40" rx="15" ry="17"/>
+        <ellipse cx="-9" cy="-30" rx="10" ry="11"/>
+        <ellipse cx="9" cy="-32" rx="10" ry="12"/>
+      </g>
+    </g>`;
+}
+
 const SCENES = {
   flood: () => `
     <defs>
@@ -96,20 +110,31 @@ const SCENES = {
   storm: () => `
     <defs>
       <linearGradient id="storm-sky" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#3b4360"/>
-        <stop offset="1" stop-color="#1f2538"/>
+        <stop offset="0" stop-color="#3f4867"/>
+        <stop offset="1" stop-color="#2b3350"/>
       </linearGradient>
     </defs>
     <rect width="${W}" height="${H}" fill="url(#storm-sky)"/>
     <path class="bolt anim-only" d="M222 34 L198 104 L226 98 L196 178" fill="none" stroke="#fff6c8" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
-    ${cloud(90, 56, 1.1, 'cloud-dark', '--from:-160px;--to:480px;--speed:60s;--delay:-15s')}
-    ${cloud(260, 40, 0.9, 'cloud-dark', '--from:-160px;--to:480px;--speed:75s;--delay:-40s')}
-    ${cloud(380, 70, 0.75, 'cloud-dark', '--from:-160px;--to:480px;--speed:50s;--delay:-30s')}
-    <g class="rain rain-slanted anim-only" stroke="#c7d2e6" stroke-width="1.2" stroke-linecap="round">
-      ${rainLines(30, 11, { minDur: 0.7, maxDur: 1.1, length: 20 })}
+    ${cloud(60, 52, 1.2, 'cloud-dark', '--from:-180px;--to:480px;--speed:30s;--delay:-6s')}
+    ${cloud(210, 34, 1.0, 'cloud-dark', '--from:-180px;--to:480px;--speed:36s;--delay:-20s')}
+    ${cloud(330, 60, 0.85, 'cloud-dark', '--from:-180px;--to:480px;--speed:26s;--delay:-14s')}
+    ${cloud(420, 42, 0.7, 'cloud-dark', '--from:-180px;--to:480px;--speed:40s;--delay:-33s')}
+    <g class="wind anim-only" fill="none" stroke="#c7d2e6" stroke-width="1.5" stroke-linecap="round">
+      <path style="--dur:1.9s;--delay:-0.3s" d="M0 64 q 45 -5 90 0"/>
+      <path style="--dur:2.3s;--delay:-1.4s" d="M0 98 q 60 -6 120 0"/>
+      <path style="--dur:1.7s;--delay:-0.9s" d="M0 128 q 35 -4 70 0"/>
+      <path style="--dur:2.1s;--delay:-1.8s" d="M0 150 q 50 -5 100 0"/>
+      <path style="--dur:2.5s;--delay:-0.6s" d="M0 82 q 30 -3 60 0"/>
+    </g>
+    <g class="rain rain-gust anim-only" stroke="#c7d2e6" stroke-width="1.2" stroke-linecap="round">
+      ${rainLines(34, 11, { minDur: 0.55, maxDur: 0.85, length: 24 })}
     </g>
     <rect class="flash anim-only" width="${W}" height="${H}" fill="#ffffff"/>
-    <rect x="0" y="196" width="${W}" height="${H - 196}" fill="#2a3a2f"/>`,
+    <rect x="0" y="196" width="${W}" height="${H - 196}" fill="#1e2c22"/>
+    ${tree(58, 198, 1.0, '--dur:2.6s;--delay:-0.8s')}
+    ${tree(118, 198, 0.7, '--dur:2.2s;--delay:-1.5s')}
+    ${tree(336, 198, 0.9, '--dur:2.9s;--delay:-0.2s')}`,
 
   sky: () => `
     <defs>

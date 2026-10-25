@@ -165,7 +165,7 @@ main {
 .scene svg { display: block; width: 100%; height: 100%; }
 .scene-flood { background: #6d8db1; }
 .scene-heat  { background: #f4a261; }
-.scene-storm { background: #1f2538; }
+.scene-storm { background: #2b3350; }
 .scene-sky   { background: #2f5d8a; }
 
 /* clouds drift from --from to --to, spread out by a negative delay */
@@ -181,11 +181,41 @@ main {
 
 /* rain */
 .rain line { animation: rain-fall var(--dur, 1.2s) linear var(--delay, 0s) infinite; }
-.rain-slanted { transform: skewX(-14deg); transform-origin: 50% 0; }
-
 @keyframes rain-fall {
   from { transform: translateY(-24px); }
   to   { transform: translateY(240px); }
+}
+
+/* storm wind: rain is driven sideways in gusts, streaks sweep across the
+   sky and the trees bend away from the wind */
+.rain-gust {
+  transform: skewX(-22deg);
+  transform-origin: 50% 0;
+  animation: rain-gust 6s ease-in-out infinite;
+}
+.wind path {
+  opacity: 0;
+  animation: wind-sweep var(--dur, 2s) linear var(--delay, 0s) infinite;
+}
+.tree {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: tree-sway var(--dur, 2.8s) ease-in-out var(--delay, 0s) infinite alternate;
+}
+
+@keyframes rain-gust {
+  0%, 100% { transform: skewX(-20deg); }
+  50%      { transform: skewX(-34deg); }
+}
+@keyframes wind-sweep {
+  0%   { transform: translateX(-220px); opacity: 0; }
+  15%  { opacity: 0.5; }
+  85%  { opacity: 0.5; }
+  100% { transform: translateX(480px); opacity: 0; }
+}
+@keyframes tree-sway {
+  from { transform: rotate(-3deg); }
+  to   { transform: rotate(-11deg); }
 }
 
 /* flood water: two waves slide sideways while the whole body slowly rises */
@@ -246,7 +276,7 @@ main {
 
 @media (prefers-reduced-motion: reduce) {
   .anim-only { display: none; }
-  .cloud, .rain line, .water, .wave-back, .wave-front, .sun-core, .sun-glow {
+  .cloud, .rain line, .water, .wave-back, .wave-front, .sun-core, .sun-glow, .tree {
     animation: none;
   }
 }
