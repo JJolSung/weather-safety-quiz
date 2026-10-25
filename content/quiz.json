@@ -1,0 +1,152 @@
+{
+  "appTitle": "Extreme Weather Safety Quiz",
+  "appIntro": "Learn how to stay safe during extreme weather in Switzerland. Pick a scenario, answer three questions and get instant feedback with links to official guidance.",
+  "demoNotice": "Sample content for demo purposes — will be replaced with client-supplied content.",
+  "learnMoreLabel": "Learn more",
+  "scenarios": [
+    {
+      "id": "flooding",
+      "title": "Flooding",
+      "intro": "Days of heavy rain have swollen the rivers and water is starting to spill onto streets in your town.",
+      "theme": "flood",
+      "questions": [
+        {
+          "question": "You are driving and reach a road covered by flowing water. You cannot tell how deep it is. What should you do?",
+          "options": [
+            "Drive through slowly so the water does not splash",
+            "Turn around and take a different route",
+            "Wait in the car until the water goes down",
+            "Get out and walk through to check the depth"
+          ],
+          "correctIndex": 1,
+          "explanation": "Never drive or walk through floodwater. Even shallow, slow-looking water can hide a washed-out road, carry debris or be strong enough to sweep a car away. Turning around is always the safe choice.",
+          "learnMoreLabel": "Natural Hazards Portal",
+          "learnMoreUrl": "https://www.natural-hazards.ch"
+        },
+        {
+          "question": "A flood warning has been issued for your area and water is rising near your building. Where is the safest place to be?",
+          "options": [
+            "In the basement, because it is sheltered",
+            "On the ground floor near the exit",
+            "On an upper floor, away from the rising water",
+            "Outside next to the river to watch the level"
+          ],
+          "correctIndex": 2,
+          "explanation": "Basements and underground garages flood first and can trap you. Move to an upper floor, avoid cellars and stay away from riverbanks and bridges, where banks can collapse without warning.",
+          "learnMoreLabel": "Natural Hazards Portal",
+          "learnMoreUrl": "https://www.natural-hazards.ch"
+        },
+        {
+          "question": "Heavy rain is forecast and the authorities have issued a high-level warning. What is the best first step?",
+          "options": [
+            "Follow official warnings and instructions, and prepare to move valuables and yourself to higher ground",
+            "Go down to the river to see how high the water is",
+            "Drive to the basement garage to move the car later",
+            "Do nothing until water enters the building"
+          ],
+          "correctIndex": 0,
+          "explanation": "Official warnings from MeteoSwiss and Alertswiss give you time to act early: move important items and vehicles out of low-lying areas, prepare to leave if asked and avoid rivers and streams.",
+          "learnMoreLabel": "Alertswiss",
+          "learnMoreUrl": "https://www.alertswiss.ch"
+        }
+      ],
+      "summary": "Stay out of floodwater on foot and in a car, move to upper floors rather than basements, and act early on official warnings."
+    },
+    {
+      "id": "heatwaves",
+      "title": "Heatwaves",
+      "intro": "A heatwave warning is in force. Temperatures will stay very high for several days, with little relief at night.",
+      "theme": "heat",
+      "questions": [
+        {
+          "question": "During a heatwave, when should you avoid strenuous outdoor activity such as sport or heavy work?",
+          "options": [
+            "Early in the morning",
+            "Around midday and in the early afternoon",
+            "In the evening after sunset",
+            "There is no need to change your plans"
+          ],
+          "correctIndex": 1,
+          "explanation": "The hottest part of the day is usually around midday and in the early afternoon. Plan physical activity for the cooler morning or evening hours and seek shade when outside.",
+          "learnMoreLabel": "MeteoSwiss",
+          "learnMoreUrl": "https://www.meteoswiss.admin.ch"
+        },
+        {
+          "question": "What is the best way to keep your home cool during a heatwave?",
+          "options": [
+            "Keep all windows wide open throughout the day",
+            "Close shutters and curtains during the day and ventilate at night or early morning",
+            "Keep windows closed day and night",
+            "Run the oven to dry out the air"
+          ],
+          "correctIndex": 1,
+          "explanation": "Keep the heat out while the sun is up by closing shutters, blinds or curtains, and let cooler air in at night or early in the morning when the outside temperature drops.",
+          "learnMoreLabel": "MeteoSwiss",
+          "learnMoreUrl": "https://www.meteoswiss.admin.ch"
+        },
+        {
+          "question": "Which groups of people need special attention during a heatwave?",
+          "options": [
+            "Only people who work outdoors",
+            "Only athletes training in the heat",
+            "Older adults, infants and young children, and people with chronic illnesses",
+            "Nobody in particular — heat affects everyone the same way"
+          ],
+          "correctIndex": 2,
+          "explanation": "Older adults, babies and young children, and people with chronic illnesses are most at risk. Check in on them, make sure they drink regularly even when not thirsty, and help them stay in cool places.",
+          "learnMoreLabel": "MeteoSwiss",
+          "learnMoreUrl": "https://www.meteoswiss.admin.ch"
+        }
+      ],
+      "summary": "Avoid the midday heat, keep your home shaded by day and ventilated by night, drink regularly and look after people at higher risk."
+    },
+    {
+      "id": "thunderstorms",
+      "title": "Severe thunderstorms",
+      "intro": "Dark clouds are building over the hills on a summer afternoon and you hear the first rumble of thunder.",
+      "theme": "storm",
+      "questions": [
+        {
+          "question": "You are hiking in open terrain when a thunderstorm approaches. Where should you seek shelter?",
+          "options": [
+            "Under the tallest tree nearby",
+            "Inside a building or a closed car",
+            "On a ridge or hilltop with a clear view",
+            "Keep walking — the storm will pass"
+          ],
+          "correctIndex": 1,
+          "explanation": "A solid building or a closed vehicle offers the best protection from lightning. Isolated trees, hilltops, ridges and open fields are dangerous places to be during a thunderstorm.",
+          "learnMoreLabel": "MeteoSwiss",
+          "learnMoreUrl": "https://www.meteoswiss.admin.ch"
+        },
+        {
+          "question": "You are swimming in a lake when you hear thunder. What should you do?",
+          "options": [
+            "Stay in the water, since water keeps you cool",
+            "Swim to the middle of the lake away from the shore",
+            "Get out of the water immediately and move away from the shore",
+            "Stand at the water's edge to watch the storm"
+          ],
+          "correctIndex": 2,
+          "explanation": "Water and open shorelines are among the most dangerous places during a thunderstorm. Leave the water right away and find shelter in a building or car.",
+          "learnMoreLabel": "MeteoSwiss",
+          "learnMoreUrl": "https://www.meteoswiss.admin.ch"
+        },
+        {
+          "question": "The storm seems to have passed. When is it safe to go back outside?",
+          "options": [
+            "As soon as the rain stops",
+            "As soon as the sun comes out",
+            "Right after the last lightning flash",
+            "After waiting a while — commonly about 30 minutes — after the last thunder you hear"
+          ],
+          "correctIndex": 3,
+          "explanation": "Lightning can strike well away from the rain and after the storm appears to be over. A common rule of thumb is to wait about 30 minutes after the last thunder before heading back outside.",
+          "learnMoreLabel": "MeteoSwiss",
+          "learnMoreUrl": "https://www.meteoswiss.admin.ch"
+        }
+      ],
+      "summary": "Head for a building or closed car, stay away from water, trees and high ground, and wait a while after the last thunder before going back out."
+    }
+  ]
+}
