@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz logic tests</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 48rem; margin: 2rem auto; padding: 0 1rem; color: #1f2933; }
+    h1 { font-size: 1.4rem; }
+    p.note { color: #52606d; font-size: 0.95rem; }
+    #summary { font-weight: 600; margin: 1rem 0; }
+    ul { list-style: none; padding: 0; }
+    li { padding: 0.35rem 0; border-bottom: 1px solid #e4e7eb; }
+    .pass { color: #0f7b3e; }
+    .fail { color: #b42318; }
+  </style>
+</head>
+<body>
+  <h1>Quiz logic tests</h1>
+  <p class="note">
+    Open this page through a local web server (for example
+    <code>python -m http.server 8000</code> from the project root, then
+    <code>http://localhost:8000/tests/quiz.test.html</code>). The same tests
+    run from the command line with <code>node tests/quiz.test.js</code>.
+  </p>
+  <p id="summary">Running…</p>
+  <ul id="results"></ul>
+  <script type="module" src="./quiz.test.js"></script>
+</body>
+</html>
